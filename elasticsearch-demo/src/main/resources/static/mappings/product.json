@@ -1,0 +1,20 @@
+{
+  "properties" : {
+    "id": {
+      "type": "keyword"
+    },
+    "title": {
+      "type": "text"
+    },
+    "desc": {
+      "type": "text"
+    },
+    "createdAt": {
+      "type": "date",
+      "format": "dd-MM-yyyy"
+    },
+    "price": {
+      "type": "double"
+    }
+  }
+}
