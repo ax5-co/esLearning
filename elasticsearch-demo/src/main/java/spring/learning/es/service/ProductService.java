@@ -30,6 +30,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import spring.learning.es.dto.AdvancedSearchRequestDto;
 import spring.learning.es.dto.SearchRequestDTO;
 import spring.learning.es.helper.ElasticsearchIndices;
 import spring.learning.es.helper.SearchUtils;
@@ -109,6 +110,7 @@ public class ProductService {
 	}
 	
 	private List<Product> searchInternal(SearchRequest request) {
+		log.info("request: "+ request.toString());
 		try {
 			return Arrays
 				.asList(client
@@ -150,5 +152,12 @@ public class ProductService {
 		} catch (IOException e) {
 			log.error(e.getMessage(), e);
 		}
+	}
+
+	public List<Product> applyAdvancedSearch(AdvancedSearchRequestDto dto) {
+		SearchRequest request = SearchUtils
+				.createSearchRequest(
+						dto, ElasticsearchIndices.PRODUCT_INDEX);
+		return searchInternal(request);
 	}
 }

@@ -2,6 +2,7 @@ package spring.learning.es.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,8 +25,10 @@ public class CustomerController {
 	private final CustomerService customerService;
 	
 	@PostMapping
-	public int save(@RequestBody List<Customer> customers) {
-		return customerService.saveAll(customers); 
+	public ResponseEntity<Integer> save(@RequestBody List<Customer> customers) {
+		return ResponseEntity
+				.status(HttpStatus.CREATED)
+				.body(customerService.saveAll(customers)) ; 
 	}
 	
 	@GetMapping
