@@ -1,0 +1,147 @@
+Indices resource:
+POST
+localhost:8080/index/recreate
+====================================================
+
+Customers resource:
+
+POST
+localhost:8080/customers
+body:
+[
+    {
+        "id": "1:",
+        "firstname": "AHMAD",
+        "lastname": "SAEED",
+        "age": 50
+    },
+    {
+        "id": "2:",
+        "firstname": "ahmad",
+        "lastname": "Mamdouh",
+        "age": 10
+    },
+    {
+        "id": "3:",
+        "firstname": "Areej",
+        "lastname": "Ahmad",
+        "age": 26
+    },
+    {
+        "id": "4:",
+        "firstname": "Saeed",
+        "lastname": "Ahmad",
+        "age": 24
+    }
+]
+
+GET
+localhost:8080/customers
+
+GET
+localhost:8080/customers/search?firstname=ahmad
+
+GET
+localhost:8080/customers/2
+
+=========================================
+
+Products resource:
+
+POST
+localhost:8080/products
+body:
+{
+    "id": "1",
+    "title": "Natural Beauty hair shampoo",
+    "desc": "Great Hair shampoo coming from Natural Beauty labs. Use little amount on the roots of wet hair, massage, then rense well",
+    "createdAt": "03-10-2021",
+    "price": 12.5
+}
+
+POST (to insert dummy data into Products Index)
+localhost:8080/products/dummy
+
+GET
+localhost:8080/products/1
+
+POST
+localhost:8080/products/search/term
+body:
+{
+    "fields": ["title"],
+    "searchTerm": "107",
+    "sortBy": "price",
+    "sortOrder": "DESC"
+}
+
+POST
+localhost:8080/products/search/price?from=11&to=14.5
+
+POST
+localhost:8080/products/search/term/price?from=11&to=15
+body:
+{
+    "fields": ["title"],
+    "searchTerm": "107",
+    "sortBy": "price",
+    "sortOrder": "DESC"
+}
+
+POST
+localhost:8080/products/search/advanced
+body:
+{
+    "mustMatch":[
+        {
+            "query": "MAC",
+            "fields": ["title", "desc"]
+        },
+        {
+            "query": "lip",
+            "fields": ["title", "desc"]
+        }
+    ],
+    "mustNotMatch":[
+        {
+            "query": "shimmer",
+            "fields": ["title", "desc"]
+        }
+    ],
+    "shouldMatch":[
+        {
+            "query": "107",
+            "fields": ["title", "desc"]
+        }
+    ],
+    "mustRange":[
+        {
+            "field": "price",
+            "params": {
+                "GTE": "0"
+            }
+        }
+    ],
+    "mustNotRange":[
+        {
+            "field": "price",
+            "params": {
+                "GTE": "20"
+            }
+        }
+    ],
+    "shouldRange":[
+        {
+            "field": "price",
+            "params": {
+                "LTE": "15"
+            }
+        }
+    ],
+    "sortBy":[
+        {
+            "field": "price",
+            "order": "DESC"
+        }
+    ]
+}
